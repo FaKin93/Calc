@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     Boolean isNew = true;
     String oldNumber = "0";
-    String operator;
+    String operator = "is";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,48 +30,75 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickNumber(View view) {
+        String number = editText.getText().toString();
         if (isNew)
         {
-            editText.setText("");
-        }
-        isNew = false;
-        String number = editText.getText().toString();
-        if(view.getId() == R.id.button0)
-        {
-            number += "0";
-        }else if(view.getId() == R.id.button1)
-        {
-            number += "1";
-        }else if(view.getId() == R.id.button2)
-        {
-            number += "2";
-        }else if(view.getId() == R.id.button3)
-        {
-            number += "3";
-        }else if(view.getId() == R.id.button4)
-        {
-            number += "4";
-        }else if(view.getId() == R.id.button5)
-        {
-            number += "5";
-        }else if(view.getId() == R.id.button6)
-        {
-            number += "6";
-        } else if(view.getId() == R.id.button7)
-        {
-            number += "7";
-        } else if (view.getId() == R.id.button8)
-        {
-            number += "8";
-        }else if (view.getId() == R.id.button9)
-        {
-            number += "9";
-        }else if (view.getId() == R.id.buttonPoint)
-        {
-            number += ".";
-        }else if (view.getId() == R.id.buttonPlusMinus)
-        {
-            number = "-" + number;
+            if(view.getId() == R.id.button0)
+            {
+                number = "0";
+            }else if(view.getId() == R.id.button1)
+            {
+                number = "1";
+            }else if(view.getId() == R.id.button2)
+            {
+                number = "2";
+            }else if(view.getId() == R.id.button3)
+            {
+                number = "3";
+            }else if(view.getId() == R.id.button4)
+            {
+                number = "4";
+            }else if(view.getId() == R.id.button5)
+            {
+                number = "5";
+            }else if(view.getId() == R.id.button6)
+            {
+                number = "6";
+            } else if(view.getId() == R.id.button7)
+            {
+                number = "7";
+            } else if (view.getId() == R.id.button8)
+            {
+                number = "8";
+            }else if (view.getId() == R.id.button9)
+            {
+                number = "9";
+            }
+            isNew = false;
+        }else {
+            if (view.getId() == R.id.button0) {
+                number += "0";
+            } else if (view.getId() == R.id.button1) {
+                number += "1";
+            } else if (view.getId() == R.id.button2) {
+                number += "2";
+            } else if (view.getId() == R.id.button3) {
+                number += "3";
+            } else if (view.getId() == R.id.button4) {
+                number += "4";
+            } else if (view.getId() == R.id.button5) {
+                number += "5";
+            } else if (view.getId() == R.id.button6) {
+                number += "6";
+            } else if (view.getId() == R.id.button7) {
+                number += "7";
+            } else if (view.getId() == R.id.button8) {
+                number += "8";
+            } else if (view.getId() == R.id.button9) {
+                number += "9";
+            } else if (view.getId() == R.id.buttonPoint) {
+                if (dotIsPoint(number) && isNew) {
+                    number += "0.";
+                } else if (dotIsPoint(number)) {
+                    number += ".";
+                }
+            } else if (view.getId() == R.id.buttonPlusMinus) {
+                if (!minusIsPoint(number) && !isNew) {
+                    number = "-" + number;
+                } else {
+                    number = number.substring(1);
+                }
+            }
         }
         editText.setText(number);
 
@@ -99,30 +126,53 @@ public class MainActivity extends AppCompatActivity {
     public void clickEqual(View view) {
         String newNumber = editText.getText().toString();
         double result = 0.0;
-        if (!operator.isEmpty())
-        {
-        if(operator == "-")
-        {
-            result = Double.parseDouble(oldNumber) - Double.parseDouble(newNumber);
-        }else if(operator == "+")
-        {
-            result = Double.parseDouble(oldNumber) + Double.parseDouble(newNumber);
-        }else if(operator == "*")
-        {
-            result = Double.parseDouble(oldNumber) * Double.parseDouble(newNumber);
-        }else if(operator == "/")
-        {
-            result = Double.parseDouble(oldNumber) / Double.parseDouble(newNumber);
-        }
-        editText.setText(result + "");
+        if (operator != "is") {
+            if (operator == "-") {
+                result = Double.parseDouble(oldNumber) - Double.parseDouble(newNumber);
+            } else if (operator == "+") {
+                result = Double.parseDouble(oldNumber) + Double.parseDouble(newNumber);
+            } else if (operator == "*") {
+                result = Double.parseDouble(oldNumber) * Double.parseDouble(newNumber);
+            } else if (operator == "/") {
+                result = Double.parseDouble(oldNumber) / Double.parseDouble(newNumber);
+            }
+            editText.setText(result + "");
         }else
         {
-            editText.setText(oldNumber);
+            editText.setText("0");
+            isNew = true;
         }
+
     }
 
     public void acClick(View view) {
         editText.setText("0");
         isNew = true;
+    }
+
+    public boolean dotIsPoint(String number)
+    {
+        int index = number.indexOf(".");
+        if(index == -1)
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
+    public boolean minusIsPoint(String number)
+    {
+        if(number.charAt(0) == '-')
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
+
+    public void clickProcent(View view) {
+
     }
 }

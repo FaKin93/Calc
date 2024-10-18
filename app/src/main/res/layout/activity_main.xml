@@ -50,6 +50,7 @@
                 />
             <Button
                 android:id="@+id/buttonProcent"
+                android:onClick="clickProcent"
                 android:text="%"
                 android:height="30pt"
                 android:width="30pt"
