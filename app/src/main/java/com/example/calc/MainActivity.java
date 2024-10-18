@@ -12,6 +12,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
     EditText editText;
+    Boolean isNew = true;
+    String oldNumber = "0";
+    String operator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickNumber(View view) {
+        if (isNew)
+        {
+            editText.setText("");
+        }
+        isNew = false;
         String number = editText.getText().toString();
         if(view.getId() == R.id.button0)
         {
@@ -58,8 +66,63 @@ public class MainActivity extends AppCompatActivity {
         }else if (view.getId() == R.id.button9)
         {
             number += "9";
+        }else if (view.getId() == R.id.buttonPoint)
+        {
+            number += ".";
+        }else if (view.getId() == R.id.buttonPlusMinus)
+        {
+            number = "-" + number;
         }
         editText.setText(number);
 
+    }
+
+    public void Operation(View view) {
+        isNew = true;
+        oldNumber = editText.getText().toString();
+        if(view.getId() == R.id.buttonDivide)
+        {
+            operator = "/";
+        }else if(view.getId() == R.id.buttonMinus)
+        {
+            operator = "-";
+        }else if(view.getId() == R.id.buttonPlus)
+        {
+            operator = "+";
+        }else if(view.getId() == R.id.buttonMultiply)
+        {
+            operator = "*";
+        }
+
+    }
+
+    public void clickEqual(View view) {
+        String newNumber = editText.getText().toString();
+        double result = 0.0;
+        if (!operator.isEmpty())
+        {
+        if(operator == "-")
+        {
+            result = Double.parseDouble(oldNumber) - Double.parseDouble(newNumber);
+        }else if(operator == "+")
+        {
+            result = Double.parseDouble(oldNumber) + Double.parseDouble(newNumber);
+        }else if(operator == "*")
+        {
+            result = Double.parseDouble(oldNumber) * Double.parseDouble(newNumber);
+        }else if(operator == "/")
+        {
+            result = Double.parseDouble(oldNumber) / Double.parseDouble(newNumber);
+        }
+        editText.setText(result + "");
+        }else
+        {
+            editText.setText(oldNumber);
+        }
+    }
+
+    public void acClick(View view) {
+        editText.setText("0");
+        isNew = true;
     }
 }
