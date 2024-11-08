@@ -30,69 +30,72 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickNumber(View view) {
-        String number = editText.getText().toString();
+        editText.setText(SetNumber(view.getId(), editText.getText().toString(), isNew));
+        isNew = false;
+    }
+    public static String SetNumber(int buttonId, String number, boolean isNew){
+
         if (isNew)
         {
-            if(view.getId() == R.id.button0)
+            if(buttonId == R.id.button0)
             {
                 number = "0";
-            }else if(view.getId() == R.id.button1)
+            }else if(buttonId == R.id.button1)
             {
                 number = "1";
-            }else if(view.getId() == R.id.button2)
+            }else if(buttonId == R.id.button2)
             {
                 number = "2";
-            }else if(view.getId() == R.id.button3)
+            }else if(buttonId == R.id.button3)
             {
                 number = "3";
-            }else if(view.getId() == R.id.button4)
+            }else if(buttonId == R.id.button4)
             {
                 number = "4";
-            }else if(view.getId() == R.id.button5)
+            }else if(buttonId == R.id.button5)
             {
                 number = "5";
-            }else if(view.getId() == R.id.button6)
+            }else if(buttonId == R.id.button6)
             {
                 number = "6";
-            } else if(view.getId() == R.id.button7)
+            } else if(buttonId == R.id.button7)
             {
                 number = "7";
-            } else if (view.getId() == R.id.button8)
+            } else if (buttonId == R.id.button8)
             {
                 number = "8";
-            }else if (view.getId() == R.id.button9)
+            }else if (buttonId == R.id.button9)
             {
                 number = "9";
             }
-            isNew = false;
         }else {
-            if (view.getId() == R.id.button0) {
+            if (buttonId == R.id.button0) {
                 number += "0";
-            } else if (view.getId() == R.id.button1) {
+            } else if (buttonId == R.id.button1) {
                 number += "1";
-            } else if (view.getId() == R.id.button2) {
+            } else if (buttonId == R.id.button2) {
                 number += "2";
-            } else if (view.getId() == R.id.button3) {
+            } else if (buttonId == R.id.button3) {
                 number += "3";
-            } else if (view.getId() == R.id.button4) {
+            } else if (buttonId == R.id.button4) {
                 number += "4";
-            } else if (view.getId() == R.id.button5) {
+            } else if (buttonId == R.id.button5) {
                 number += "5";
-            } else if (view.getId() == R.id.button6) {
+            } else if (buttonId == R.id.button6) {
                 number += "6";
-            } else if (view.getId() == R.id.button7) {
+            } else if (buttonId == R.id.button7) {
                 number += "7";
-            } else if (view.getId() == R.id.button8) {
+            } else if (buttonId == R.id.button8) {
                 number += "8";
-            } else if (view.getId() == R.id.button9) {
+            } else if (buttonId == R.id.button9) {
                 number += "9";
-            } else if (view.getId() == R.id.buttonPoint) {
+            } else if (buttonId == R.id.buttonPoint) {
                 if (dotIsPoint(number) && isNew) {
                     number += "0.";
                 } else if (dotIsPoint(number)) {
                     number += ".";
                 }
-            } else if (view.getId() == R.id.buttonPlusMinus) {
+            } else if (buttonId == R.id.buttonPlusMinus) {
                 if (!minusIsPoint(number) && !isNew) {
                     number = "-" + number;
                 } else {
@@ -100,27 +103,34 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        editText.setText(number);
+        return number;
 
     }
 
     public void Operation(View view) {
         isNew = true;
         oldNumber = editText.getText().toString();
-        if(view.getId() == R.id.buttonDivide)
+        operator = SetOperator(view.getId());
+
+    }
+
+    public static String SetOperator(int buttonId)
+    {
+        String operator = "";
+        if(buttonId== R.id.buttonDivide)
         {
             operator = "/";
-        }else if(view.getId() == R.id.buttonMinus)
+        }else if(buttonId == R.id.buttonMinus)
         {
             operator = "-";
-        }else if(view.getId() == R.id.buttonPlus)
+        }else if(buttonId == R.id.buttonPlus)
         {
             operator = "+";
-        }else if(view.getId() == R.id.buttonMultiply)
+        }else if(buttonId == R.id.buttonMultiply)
         {
             operator = "*";
         }
-
+        return operator;
     }
 
     public void clickEqual(View view) {
@@ -150,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         isNew = true;
     }
 
-    public boolean dotIsPoint(String number)
+    public static boolean dotIsPoint(String number)
     {
         int index = number.indexOf(".");
         if(index == -1)
@@ -161,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
-    public boolean minusIsPoint(String number)
+    public static boolean minusIsPoint(String number)
     {
         if(number.charAt(0) == '-')
         {
